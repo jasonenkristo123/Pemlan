@@ -10,9 +10,9 @@ public class Bank {
     Scanner in = new Scanner(System.in);
 
     public void setName(String name) {
-        if (name.length() > 4) {
+        if (name.length() < 4) {
             System.out.println("Nama harus lebih dari 4 karakter");
-            return;
+            System.exit(0);
         } else {
             this.name = name;
         }
@@ -21,16 +21,16 @@ public class Bank {
     public void setAccountNumber(String accountNumber) {
         if (accountNumber.length() < 8) {
             System.out.println("Nomor rekening harus lebih dari 8 karakter");
-            return;
+            System.exit(0);
         } else {
             this.accountNumber = accountNumber;
         }
     }
 
     public void setPassword(String password) {
-        if (password.length() < 8 && !password.contains(password.toUpperCase())) {
+        if (password.length() < 8 && !password.contains(password.toUpperCase()) && !password.contains("-")) {
             System.out.println("Password harus lebih dari 8 karakter dan mengandung huruf besar");
-            return;
+            System.exit(0);
         } else {
             this.password = password;
         }
@@ -39,25 +39,26 @@ public class Bank {
     public void addBalance(double amount) {
         System.out.print("Masukkan password untuk menambah saldo: ");
         String inputPassword = in.nextLine();
-        if (amount < 0 && !inputPassword.equals(this.password)) {
+        if (amount < 0 || !inputPassword.equals(this.password)) {
             System.out.println("Transaksi gagal, coba cek kembali password atau jumlah yang ingin dimasukkan");
-            return;
+            System.exit(0);
         } else {
             this.balance += amount;
             System.out.println("Transaksi berhasil, saldo anda sekarang: " + (this.balance));
         }
     }
 
-    public void withdrawBalance(double amount) {
+    public boolean withdrawBalance(double amount) {
         System.out.print("Masukkan password untuk withdraw saldo: ");
         
         String inputPassword = in.nextLine();
         if (this.balance < amount || amount < 0 || !inputPassword.equals(this.password)) {
             System.out.println("Transaksi gagal, coba cek kembali password atau jumlah yang ingin ditarik");
-            return;
+            return false;
         } else {
             this.balance -= amount;
             System.out.println("Transaksi berhasil, saldo anda sekarang: " + (this.balance));
+            return true;
         }
     }
 

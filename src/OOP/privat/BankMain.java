@@ -2,6 +2,7 @@ package OOP.privat;
 
 public class BankMain {
     public static void main(String[] args) {
+        
         Bank akun1 = new Bank();
         akun1.setName("W");
         akun1.setAccountNumber("12345678");
